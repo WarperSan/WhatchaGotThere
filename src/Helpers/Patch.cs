@@ -1,5 +1,3 @@
-using HarmonyLib;
-
 namespace WhatchaGotThere.Helpers;
 
 /// <summary>
@@ -7,21 +5,11 @@ namespace WhatchaGotThere.Helpers;
 /// </summary>
 internal static class Patch
 {
-	private static Harmony? _harmony;
-
 	/// <summary>
 	///     Applies every patch needed by this mod
 	/// </summary>
 	public static void ApplyAll()
 	{
-		if (_harmony != null)
-		{
-			Log.Debug("Unpatching the existing harmony instance.");
-			RevertAll();
-		}
-
-		_harmony = new Harmony(MyPluginInfo.PLUGIN_GUID);
-
 		Log.Debug("All patches applied.");
 	}
 
@@ -30,13 +18,6 @@ internal static class Patch
 	/// </summary>
 	public static void RevertAll()
 	{
-		if (_harmony == null)
-			return;
-
-		_harmony.UnpatchSelf();
-
-		_harmony = null;
-
 		Log.Debug("All patches reverted.");
 	}
 }
