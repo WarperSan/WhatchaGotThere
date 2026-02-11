@@ -1,3 +1,5 @@
+using WhatchaGotThere.Hooks;
+
 namespace WhatchaGotThere.Helpers;
 
 /// <summary>
@@ -10,6 +12,8 @@ internal static class Patch
 	/// </summary>
 	public static void ApplyAll()
 	{
+		On.RoR2.UI.AllyCardManager.Awake += AllyCardManager_Hooks.Awake;
+
 		Log.Debug("All patches applied.");
 	}
 
@@ -18,6 +22,8 @@ internal static class Patch
 	/// </summary>
 	public static void RevertAll()
 	{
+		On.RoR2.UI.AllyCardManager.Awake -= AllyCardManager_Hooks.Awake;
+
 		Log.Debug("All patches reverted.");
 	}
 }
