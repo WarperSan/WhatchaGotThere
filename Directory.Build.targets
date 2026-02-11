@@ -5,6 +5,7 @@
             <PluginGUID Condition="'$(PluginGUID)' == ''">dev.$([System.String]::Copy('$(Authors)').ToLower()).$([System.String]::Copy('$(AssemblyName)').ToLower())</PluginGUID>
             <PluginName Condition="'$(PluginName)' == ''">$(Product)</PluginName>
             <PluginVersion Condition="'$(PluginVersion)' == ''">$(Version)</PluginVersion>
+            <PluginVersion Condition="'$(PluginVersion)' != ''">$([System.Text.RegularExpressions.Regex]::Match($(PluginVersion), `[0-9]+\.[0-9]+\.[0-9]+`))</PluginVersion>
 
             <GeneratedText><![CDATA[
 #pragma warning disable CS1591
