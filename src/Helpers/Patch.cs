@@ -22,8 +22,6 @@ internal static class Patch
 
 		_harmony = new Harmony(MyPluginInfo.PLUGIN_GUID);
 
-		_harmony.PatchAll(typeof(Patches.Example_Patches));
-
 		Log.Debug("All patches applied.");
 	}
 
