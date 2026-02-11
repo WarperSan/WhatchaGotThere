@@ -1,4 +1,3 @@
-using System.Text;
 using BepInEx.Logging;
 
 namespace WhatchaGotThere.Helpers;
@@ -8,57 +7,43 @@ namespace WhatchaGotThere.Helpers;
 /// </summary>
 internal static class Log
 {
-	private static readonly ManualLogSource? _logger = Logger.CreateLogSource(MyPluginInfo.PLUGIN_GUID);
+    private static ManualLogSource? _logger;
 
-	private static void LogSelf(object?[] data, LogLevel level)
-	{
-		if (_logger == null)
-			return;
-
-		var message = new StringBuilder();
-
-		for (var i = 0; i < data.Length; i++)
-		{
-			var content = data[i] ?? "null";
-
-			message.Append(content);
-
-			if (i < data.Length - 1)
-				message.Append(' ');
-		}
-
-		_logger.Log(level, message.ToString());
-	}
+    private static void LogSelf(string message, LogLevel level)
+    {
+        _logger ??= Logger.CreateLogSource(MyPluginInfo.PLUGIN_NAME);
+        _logger?.Log(level, message);
+    }
 
 	/// <summary>
 	///     Logs information for developers that helps to debug the mod
 	/// </summary>
-	public static void Debug(params object?[] data)
+	public static void Debug(string message)
 	{
-		LogSelf(data, LogLevel.Debug);
+        LogSelf(message, LogLevel.Debug);
 	}
 
 	/// <summary>
 	///     Logs information for players to know important steps of the mod
 	/// </summary>
-	public static void Info(params object?[] data)
+	public static void Info(string message)
 	{
-		LogSelf(data, LogLevel.Message);
+        LogSelf(message, LogLevel.Message);
 	}
 
 	/// <summary>
 	///     Logs information for players to warn them about an unwanted state
 	/// </summary>
-	public static void Warning(params object?[] data)
+	public static void Warning(string message)
 	{
-		LogSelf(data, LogLevel.Warning);
+        LogSelf(message, LogLevel.Warning);
 	}
 
 	/// <summary>
 	///     Logs information for players to notify them of an error
 	/// </summary>
-	public static void Error(params object?[] data)
+	public static void Error(string message)
 	{
-		LogSelf(data, LogLevel.Error);
+        LogSelf(message, LogLevel.Error);
 	}
 }
