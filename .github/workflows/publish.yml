@@ -49,7 +49,7 @@ jobs:
           echo "DESCRIPTION=$(get-dotnet-property 'Description')" >> $GITHUB_OUTPUT
           echo "WEBSITE=$(get-dotnet-property 'PackageProjectUrl' 'RepositoryUrl')" >> $GITHUB_OUTPUT
 
-      - uses: WarperSan/upload-thunderstore-package@v0.1.1-beta
+      - uses: WarperSan/upload-thunderstore-package@v1.0.0
         with:
           community: 'riskofrain2'
           team: ${{ steps.get-properties.outputs.TEAM }}
