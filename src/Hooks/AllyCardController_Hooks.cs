@@ -27,6 +27,11 @@ internal static class AllyCardController_Hooks
 		);
 		equipmentSlot.transform.SetParent(self.rectTransform, false);
 
+		var siblingIndex = self.rectTransform.Find("Portrait")?.GetSiblingIndex() ?? -1;
+
+		if (siblingIndex != -1)
+			equipmentSlot.transform.SetSiblingIndex(siblingIndex + 1);
+		
 		var equipmentSlotRect = equipmentSlot.GetComponent<RectTransform>();
 		equipmentSlotRect.sizeDelta = new Vector2(48f, 48f);
 		
