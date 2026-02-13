@@ -29,7 +29,7 @@ jobs:
         shell: bash
         run: |
           get-dotnet-property() {
-            local CSPROJ="./src/ShipInventoryUpdated/ShipInventoryUpdated.csproj"
+            local CSPROJ="./WhatchaGotThere.csproj"
           
             for propertyName in "$@"
             do
