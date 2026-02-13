@@ -1,5 +1,6 @@
 using RoR2;
 using RoR2.UI;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -62,6 +63,7 @@ internal static class AllyCardController_Hooks
 		
 		var displayRoot = new GameObject("DisplayRoot", typeof(RectTransform));
 		displayRoot.transform.SetParent(equipmentSlot.transform, false);
+		equipmentIcon.displayRoot = displayRoot;
 		
 		var displayRootRect = displayRoot.GetComponent<RectTransform>();
 		displayRootRect.anchorMin = Vector2.zero;
@@ -89,13 +91,16 @@ internal static class AllyCardController_Hooks
 			typeof(HGTextMeshProUGUI)
 		);
 		cooldownText.transform.SetParent(displayRoot.transform, false);
-		equipmentIcon.cooldownText = cooldownText.GetComponent<HGTextMeshProUGUI>();
 		
 		var cooldownTextRect = cooldownText.GetComponent<RectTransform>();
 		cooldownTextRect.anchorMin = Vector2.zero;
 		cooldownTextRect.anchorMax = Vector2.one;
 		cooldownTextRect.offsetMin = Vector2.zero;
 		cooldownTextRect.offsetMax = Vector2.zero;
+		
+		var cooldownTextGUI = cooldownText.GetComponent<HGTextMeshProUGUI>();
+		cooldownTextGUI.alignment = TextAlignmentOptions.Center;
+		equipmentIcon.cooldownText = cooldownTextGUI;
 		
 		return equipmentSlot;
 	}
