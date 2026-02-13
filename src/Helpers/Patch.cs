@@ -1,4 +1,4 @@
-using WhatchaGotThere.Hooks;
+using HarmonyLib;
 
 namespace WhatchaGotThere.Helpers;
 
@@ -7,14 +7,23 @@ namespace WhatchaGotThere.Helpers;
 /// </summary>
 internal static class Patch
 {
+	private static Harmony? _harmony;
+
 	/// <summary>
 	///     Applies every patch needed by this mod
 	/// </summary>
 	public static void ApplyAll()
 	{
-		On.RoR2.UI.AllyCardManager.Awake += AllyCardManager_Hooks.Awake;
-		On.RoR2.UI.AllyCardController.Awake += AllyCardController_Hooks.Awake;
-		On.RoR2.UI.AllyCardController.UpdateInfo += AllyCardController_Hooks.UpdateInfo;
+		if (_harmony != null)
+		{
+			Log.Debug("Unpatching the existing harmony instance.");
+			RevertAll();
+		}
+
+		_harmony = new Harmony(MyPluginInfo.PLUGIN_GUID);
+
+		_harmony.PatchAll(typeof(Patches.AllyCardController_Patches));
+		_harmony.PatchAll(typeof(Patches.AllyCardManager_Patches));
 
 		Log.Debug("All patches applied.");
 	}
@@ -24,9 +33,12 @@ internal static class Patch
 	/// </summary>
 	public static void RevertAll()
 	{
-		On.RoR2.UI.AllyCardManager.Awake -= AllyCardManager_Hooks.Awake;
-		On.RoR2.UI.AllyCardController.Awake -= AllyCardController_Hooks.Awake;
-		On.RoR2.UI.AllyCardController.UpdateInfo -= AllyCardController_Hooks.UpdateInfo;
+		if (_harmony == null)
+			return;
+
+		_harmony.UnpatchSelf();
+
+		_harmony = null;
 
 		Log.Debug("All patches reverted.");
 	}

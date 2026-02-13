@@ -1,21 +1,20 @@
+using HarmonyLib;
 using RoR2;
 using RoR2.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+// ReSharper disable InconsistentNaming
 
-namespace WhatchaGotThere.Hooks;
+namespace WhatchaGotThere.Patches;
 
-/// <summary>
-/// Hooks for <see cref="AllyCardController"/>
-/// </summary>
-// ReSharper disable once InconsistentNaming
-internal static class AllyCardController_Hooks
+[HarmonyPatch(typeof(AllyCardController))]
+internal static class AllyCardController_Patches
 {
-	public static void Awake(On.RoR2.UI.AllyCardController.orig_Awake orig, AllyCardController self)
+	[HarmonyPatch(nameof(AllyCardController.Awake))]
+	[HarmonyPostfix]
+	private static void Awake_Postfix(AllyCardController __instance)
 	{
-		orig(self);
-		
 		var equipmentSlot = new GameObject(
 			nameof(WhatchaGotThere) + " EquipmentSlot",
 			typeof(RectTransform),
@@ -23,11 +22,11 @@ internal static class AllyCardController_Hooks
 			typeof(Image),
 			typeof(TooltipProvider)
 		);
-		equipmentSlot.transform.SetParent(self.rectTransform, false);
+		equipmentSlot.transform.SetParent(__instance.rectTransform, false);
 		equipmentSlot.AddComponent<MPEventSystemLocator>();
 		equipmentSlot.AddComponent<HGButton>();
 
-		var siblingIndex = self.rectTransform.Find("Portrait")?.GetSiblingIndex() ?? -1;
+		var siblingIndex = __instance.rectTransform.Find("Portrait")?.GetSiblingIndex() ?? -1;
 
 		if (siblingIndex != -1)
 			equipmentSlot.transform.SetSiblingIndex(siblingIndex + 1);
@@ -91,18 +90,18 @@ internal static class AllyCardController_Hooks
 		equipmentIcon.cooldownText = cooldownTextGUI;
 	}
 
-	public static void UpdateInfo(On.RoR2.UI.AllyCardController.orig_UpdateInfo orig, AllyCardController self)
+	[HarmonyPatch(nameof(AllyCardController.UpdateInfo))]
+	[HarmonyPostfix]
+	private static void UpdateInfo_Postfix(AllyCardController __instance)
 	{
-		orig(self);
-		
-		var equipmentIcon = self.GetComponentInChildren<EquipmentIcon>();
+		var equipmentIcon = __instance.GetComponentInChildren<EquipmentIcon>();
 		
 		if (equipmentIcon == null)
 			return;
 
-		var showIcon = ShouldShowIcon(self);
+		var showIcon = ShouldShowIcon(__instance);
 
-		equipmentIcon.targetInventory = self.sourceMaster.inventory;
+		equipmentIcon.targetInventory = __instance.sourceMaster.inventory;
 		equipmentIcon.gameObject.SetActive(showIcon);
 	}
 
