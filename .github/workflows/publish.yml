@@ -42,7 +42,6 @@ jobs:
             echo ""
           }
           
-          echo "OUTPUT=$(get-dotnet-property 'TargetPath')" >> $GITHUB_OUTPUT
           echo "NAME=$(get-dotnet-property 'Product')" >> $GITHUB_OUTPUT
           echo "TEAM=$(get-dotnet-property 'Authors')" >> $GITHUB_OUTPUT
           echo "DESCRIPTION=$(get-dotnet-property 'Description')" >> $GITHUB_OUTPUT
@@ -61,7 +60,8 @@ jobs:
           description: ${{ steps.get-properties.outputs.DESCRIPTION }}
           version: ${{ github.ref_name }}
           website: ${{ steps.get-properties.outputs.WEBSITE }}
-          files: ${{ steps.get-properties.outputs.OUTPUT }}
+          files: |
+            ./bin/Release/netstandard2.1/WhatchaGotThere.dll
           token: ${{ secrets.TCLI_AUTH_TOKEN }}
           package-files: |
             ./icon.png
