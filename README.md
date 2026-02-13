@@ -1,3 +1,3 @@
 # Whatcha Got There?
 
-Shows what equipment the `Equipment Drone` is currently holding.
+Shows what equipment an ally is currently holding.

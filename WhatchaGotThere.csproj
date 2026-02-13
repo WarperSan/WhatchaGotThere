@@ -4,7 +4,7 @@
         <AssemblyName>WhatchaGotThere</AssemblyName>
         <Product>WhatchaGotThere</Product>
         <Authors>WarperSan</Authors>
-        <Description></Description>
+        <Description>Shows what equipment an ally is currently holding.</Description>
     </PropertyGroup>
 
     <!-- Project Properties -->
