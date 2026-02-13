@@ -13,6 +13,7 @@ internal static class Patch
 	public static void ApplyAll()
 	{
 		On.RoR2.UI.AllyCardManager.Awake += AllyCardManager_Hooks.Awake;
+		On.RoR2.UI.AllyCardController.Awake += AllyCardController_Hooks.Awake;
 		On.RoR2.UI.AllyCardController.UpdateInfo += AllyCardController_Hooks.UpdateInfo;
 
 		Log.Debug("All patches applied.");
@@ -24,6 +25,7 @@ internal static class Patch
 	public static void RevertAll()
 	{
 		On.RoR2.UI.AllyCardManager.Awake -= AllyCardManager_Hooks.Awake;
+		On.RoR2.UI.AllyCardController.Awake -= AllyCardController_Hooks.Awake;
 		On.RoR2.UI.AllyCardController.UpdateInfo -= AllyCardController_Hooks.UpdateInfo;
 
 		Log.Debug("All patches reverted.");

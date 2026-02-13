@@ -12,26 +12,10 @@ namespace WhatchaGotThere.Hooks;
 // ReSharper disable once InconsistentNaming
 internal static class AllyCardController_Hooks
 {
-	public static void UpdateInfo(On.RoR2.UI.AllyCardController.orig_UpdateInfo orig, AllyCardController self)
+	public static void Awake(On.RoR2.UI.AllyCardController.orig_Awake orig, AllyCardController self)
 	{
 		orig(self);
-
-		// If no inventory, skip
-		if (self.sourceMaster.inventory == null)
-			return;
-
-		var equipmentIndex = self.sourceMaster.inventory.GetEquipmentIndex();
-
-		// If no equipment, skip
-		if (equipmentIndex == EquipmentIndex.None)
-			return;
-
-		var ui = CreateUI(self.sourceMaster.inventory);
-		ui.transform.SetParent(self.rectTransform, false);
-	}
-
-	private static GameObject CreateUI(Inventory inventory)
-	{
+		
 		var equipmentSlot = new GameObject(
 			nameof(WhatchaGotThere) + " EquipmentSlot",
 			typeof(RectTransform),
@@ -39,10 +23,10 @@ internal static class AllyCardController_Hooks
 			typeof(Image),
 			typeof(MPEventSystemLocator),
 			typeof(HGButton),
-			typeof(EquipmentIcon),
 			typeof(TooltipProvider)
 		);
-		
+		equipmentSlot.transform.SetParent(self.rectTransform, false);
+
 		var equipmentSlotRect = equipmentSlot.GetComponent<RectTransform>();
 		equipmentSlotRect.sizeDelta = new Vector2(48f, 48f);
 		
@@ -57,8 +41,7 @@ internal static class AllyCardController_Hooks
 		var equipmentSlotButton = equipmentSlot.GetComponent<HGButton>();
 		equipmentSlotButton.image = equipmentSlotImage;
 		
-		var equipmentIcon = equipmentSlot.GetComponent<EquipmentIcon>();
-		equipmentIcon.targetInventory = inventory;
+		var equipmentIcon = equipmentSlot.AddComponent<EquipmentIcon>();
 		equipmentIcon.tooltipProvider = equipmentSlot.GetComponent<TooltipProvider>();
 		
 		var displayRoot = new GameObject("DisplayRoot", typeof(RectTransform));
@@ -101,7 +84,27 @@ internal static class AllyCardController_Hooks
 		var cooldownTextGUI = cooldownText.GetComponent<HGTextMeshProUGUI>();
 		cooldownTextGUI.alignment = TextAlignmentOptions.Center;
 		equipmentIcon.cooldownText = cooldownTextGUI;
+	}
+
+	public static void UpdateInfo(On.RoR2.UI.AllyCardController.orig_UpdateInfo orig, AllyCardController self)
+	{
+		orig(self);
+
+		// If no inventory, skip
+		if (self.sourceMaster.inventory == null)
+			return;
+
+		var equipmentIndex = self.sourceMaster.inventory.GetEquipmentIndex();
+
+		// If no equipment, skip
+		if (equipmentIndex == EquipmentIndex.None)
+			return;
+
+		var equipmentIcon = self.GetComponentInChildren<EquipmentIcon>();
 		
-		return equipmentSlot;
+		if (equipmentIcon == null)
+			return;
+
+		equipmentIcon.targetInventory = self.sourceMaster.inventory;
 	}
 }
