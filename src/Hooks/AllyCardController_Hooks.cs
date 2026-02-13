@@ -95,23 +95,23 @@ internal static class AllyCardController_Hooks
 		if (equipmentIcon == null)
 			return;
 
-		// If no inventory, skip
-		if (self.sourceMaster.inventory == null)
-		{
-			equipmentIcon.gameObject.SetActive(false);
-			return;
-		}
+		var showIcon = ShouldShowIcon(self);
 
-		var equipmentIndex = self.sourceMaster.inventory.GetEquipmentIndex();
+		equipmentIcon.targetInventory = self.sourceMaster.inventory;
+		equipmentIcon.gameObject.SetActive(showIcon);
+	}
+
+	private static bool ShouldShowIcon(AllyCardController controller)
+	{
+		if (controller.sourceMaster.inventory == null)
+			return false;
+
+		var equipmentIndex = controller.sourceMaster.inventory.GetEquipmentIndex();
 
 		// If no equipment, skip
 		if (equipmentIndex == EquipmentIndex.None)
-		{
-			equipmentIcon.gameObject.SetActive(false);
-			return;
-		}
+			return false;
 
-		equipmentIcon.targetInventory = self.sourceMaster.inventory;
-		equipmentIcon.gameObject.SetActive(true);
+		return true;
 	}
 }
