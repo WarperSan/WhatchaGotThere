@@ -89,22 +89,29 @@ internal static class AllyCardController_Hooks
 	public static void UpdateInfo(On.RoR2.UI.AllyCardController.orig_UpdateInfo orig, AllyCardController self)
 	{
 		orig(self);
-
-		// If no inventory, skip
-		if (self.sourceMaster.inventory == null)
-			return;
-
-		var equipmentIndex = self.sourceMaster.inventory.GetEquipmentIndex();
-
-		// If no equipment, skip
-		if (equipmentIndex == EquipmentIndex.None)
-			return;
-
+		
 		var equipmentIcon = self.GetComponentInChildren<EquipmentIcon>();
 		
 		if (equipmentIcon == null)
 			return;
 
+		// If no inventory, skip
+		if (self.sourceMaster.inventory == null)
+		{
+			equipmentIcon.gameObject.SetActive(false);
+			return;
+		}
+
+		var equipmentIndex = self.sourceMaster.inventory.GetEquipmentIndex();
+
+		// If no equipment, skip
+		if (equipmentIndex == EquipmentIndex.None)
+		{
+			equipmentIcon.gameObject.SetActive(false);
+			return;
+		}
+
 		equipmentIcon.targetInventory = self.sourceMaster.inventory;
+		equipmentIcon.gameObject.SetActive(true);
 	}
 }
