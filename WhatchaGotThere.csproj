@@ -5,6 +5,7 @@
         <Product>WhatchaGotThere</Product>
         <Authors>WarperSan</Authors>
         <Description>Shows what equipment an ally is currently holding.</Description>
+        <RepositoryUrl>https://github.com/WarperSan/WhatchaGotThere/</RepositoryUrl>
     </PropertyGroup>
 
     <!-- Project Properties -->
