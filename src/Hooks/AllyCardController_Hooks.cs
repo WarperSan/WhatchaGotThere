@@ -21,11 +21,11 @@ internal static class AllyCardController_Hooks
 			typeof(RectTransform),
 			typeof(LayoutElement),
 			typeof(Image),
-			typeof(MPEventSystemLocator),
-			typeof(HGButton),
 			typeof(TooltipProvider)
 		);
 		equipmentSlot.transform.SetParent(self.rectTransform, false);
+		equipmentSlot.AddComponent<MPEventSystemLocator>();
+		equipmentSlot.AddComponent<HGButton>();
 
 		var siblingIndex = self.rectTransform.Find("Portrait")?.GetSiblingIndex() ?? -1;
 
