@@ -59,6 +59,8 @@ jobs:
           name: ${{ steps.get-properties.outputs.NAME }}
           description: ${{ steps.get-properties.outputs.DESCRIPTION }}
           version: ${{ github.ref_name }}
+          dependencies: |
+            bbepis-BepInExPack-5.4.2121
           website: ${{ steps.get-properties.outputs.WEBSITE }}
           files: |
             ./bin/Release/netstandard2.1/WhatchaGotThere.dll
