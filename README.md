@@ -1,8 +1,8 @@
 # Whatcha Got There?
 
 [![Thunderstore Version](https://img.shields.io/thunderstore/v/WarperSan/WhatchaGotThere)](https://thunderstore.io/package/WarperSan/WhatchaGotThere/)
-[![Thunderstore Downloads](https://img.shields.io/thunderstore/dt/WarperSan/WhatchaGotThere)](https://thunderstore.io/package/WarperSan/WhatchaGotThere/)
-[![License](https://img.shields.io/github/license/WarperSan/WhatchaGotThere)](https://raw.githubusercontent.com/WarperSan/WhatchaGotThere/master/LICENSE)
+[![Thunderstore Downloads](https://img.shields.io/thunderstore/dt/WarperSan/WhatchaGotThere?color=purple)](https://thunderstore.io/package/WarperSan/WhatchaGotThere/)
+[![License](https://img.shields.io/github/license/WarperSan/WhatchaGotThere?color=orange)](https://raw.githubusercontent.com/WarperSan/WhatchaGotThere/master/LICENSE)
 
 Shows what equipment an ally is currently holding.
 
