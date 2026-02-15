@@ -99,23 +99,10 @@ internal static class AllyCardController_Patches
 		if (equipmentIcon == null)
 			return;
 
-		var showIcon = ShouldShowIcon(__instance);
+		var inventory = __instance.sourceMaster.inventory;
+		var equipmentIndex = inventory.currentEquipmentState.equipmentIndex;
 
-		equipmentIcon.targetInventory = __instance.sourceMaster.inventory;
-		equipmentIcon.gameObject.SetActive(showIcon);
-	}
-
-	private static bool ShouldShowIcon(AllyCardController controller)
-	{
-		if (controller.sourceMaster.inventory == null)
-			return false;
-
-		var equipmentIndex = controller.sourceMaster.inventory.GetEquipmentIndex();
-
-		// If no equipment, skip
-		if (equipmentIndex == EquipmentIndex.None)
-			return false;
-
-		return true;
+		equipmentIcon.targetInventory = inventory;
+		equipmentIcon.gameObject.SetActive(equipmentIndex == EquipmentIndex.None);
 	}
 }
