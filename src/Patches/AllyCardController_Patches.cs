@@ -4,6 +4,7 @@ using RoR2.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+
 // ReSharper disable InconsistentNaming
 
 namespace WhatchaGotThere.Patches;
@@ -30,10 +31,10 @@ internal static class AllyCardController_Patches
 
 		if (siblingIndex != -1)
 			equipmentSlot.transform.SetSiblingIndex(siblingIndex + 1);
-		
+
 		var equipmentSlotRect = equipmentSlot.GetComponent<RectTransform>();
 		equipmentSlotRect.sizeDelta = new Vector2(48f, 48f);
-		
+
 		var equipmentSlotLayoutElement = equipmentSlot.GetComponent<LayoutElement>();
 		equipmentSlotLayoutElement.preferredWidth = equipmentSlotRect.rect.width;
 		equipmentSlotLayoutElement.preferredHeight = equipmentSlotRect.rect.height;
@@ -41,17 +42,21 @@ internal static class AllyCardController_Patches
 		var equipmentSlotImage = equipmentSlot.GetComponent<Image>();
 		equipmentSlotImage.color = Color.clear;
 		equipmentSlotImage.raycastTarget = false;
-		
+
 		var equipmentSlotButton = equipmentSlot.GetComponent<HGButton>();
 		equipmentSlotButton.image = equipmentSlotImage;
-		
+		equipmentSlotButton.selectOnPointerEnter = false;
+
+		var equipmentSlotUIPassthrough = equipmentSlot.AddComponent<UIInputPassthrough>();
+		equipmentSlotUIPassthrough.OnlyAllowMovement = false;
+
 		var equipmentIcon = equipmentSlot.AddComponent<EquipmentIcon>();
 		equipmentIcon.tooltipProvider = equipmentSlot.GetComponent<TooltipProvider>();
-		
+
 		var displayRoot = new GameObject("DisplayRoot", typeof(RectTransform));
 		displayRoot.transform.SetParent(equipmentSlot.transform, false);
 		equipmentIcon.displayRoot = displayRoot;
-		
+
 		var displayRootRect = displayRoot.GetComponent<RectTransform>();
 		displayRootRect.anchorMin = Vector2.zero;
 		displayRootRect.anchorMax = Vector2.one;
@@ -65,7 +70,7 @@ internal static class AllyCardController_Patches
 		);
 		iconPanel.transform.SetParent(displayRoot.transform, false);
 		equipmentIcon.iconImage = iconPanel.GetComponent<RawImage>();
-		
+
 		var iconPanelRect = iconPanel.GetComponent<RectTransform>();
 		iconPanelRect.anchorMin = Vector2.zero;
 		iconPanelRect.anchorMax = Vector2.one;
@@ -78,13 +83,13 @@ internal static class AllyCardController_Patches
 			typeof(HGTextMeshProUGUI)
 		);
 		cooldownText.transform.SetParent(displayRoot.transform, false);
-		
+
 		var cooldownTextRect = cooldownText.GetComponent<RectTransform>();
 		cooldownTextRect.anchorMin = Vector2.zero;
 		cooldownTextRect.anchorMax = Vector2.one;
 		cooldownTextRect.offsetMin = Vector2.zero;
 		cooldownTextRect.offsetMax = Vector2.zero;
-		
+
 		var cooldownTextGUI = cooldownText.GetComponent<HGTextMeshProUGUI>();
 		cooldownTextGUI.alignment = TextAlignmentOptions.Center;
 		equipmentIcon.cooldownText = cooldownTextGUI;
@@ -95,7 +100,7 @@ internal static class AllyCardController_Patches
 	private static void UpdateInfo_Postfix(AllyCardController __instance)
 	{
 		var equipmentIcon = __instance.GetComponentInChildren<EquipmentIcon>();
-		
+
 		if (equipmentIcon == null)
 			return;
 
