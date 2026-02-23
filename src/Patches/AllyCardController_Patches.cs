@@ -116,13 +116,16 @@ internal static class AllyCardController_Patches
 	/// </summary>
 	private static bool ShouldDisplayUI(CharacterMaster master)
 	{
-		if (Configuration.Instance == null)
+		if (master.inventory.currentEquipmentState.equipmentIndex == EquipmentIndex.None)
 			return false;
+
+		if (Configuration.Instance == null)
+			return true;
 
 		var type = Configuration.Instance.AllowedTargets.Value;
 
 		if (type == Configuration.TargetType.None)
-			return false;
+			return true;
 
 		var bodyIndex = master.GetBody().bodyIndex;
 
@@ -135,7 +138,6 @@ internal static class AllyCardController_Patches
 		if (master.minionOwnership.ownerMaster != null)
 			return type.HasFlag(Configuration.TargetType.Allies);
 
-		var equipmentIndex = master.inventory.currentEquipmentState.equipmentIndex;
-		return equipmentIndex != EquipmentIndex.None;
+		return true;
 	}
 }

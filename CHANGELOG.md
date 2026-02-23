@@ -1,6 +1,13 @@
 # Changelog
 
 <details>
+<summary>1.0.3</summary>
+
+## Fixes
+- The UI now takes into account if the ally has an equipment or not.
+</details>
+
+<details>
 <summary>1.0.2</summary>
 
 ## Additions
