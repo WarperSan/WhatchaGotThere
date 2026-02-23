@@ -4,6 +4,7 @@ using RoR2.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using WhatchaGotThere.Helpers;
 
 // ReSharper disable InconsistentNaming
 
@@ -104,10 +105,37 @@ internal static class AllyCardController_Patches
 		if (equipmentIcon == null)
 			return;
 
-		var inventory = __instance.sourceMaster.inventory;
-		var equipmentIndex = inventory.currentEquipmentState.equipmentIndex;
+		var shouldDisplay = ShouldDisplayUI(__instance.sourceMaster);
 
-		equipmentIcon.targetInventory = inventory;
-		equipmentIcon.gameObject.SetActive(equipmentIndex == EquipmentIndex.None);
+		equipmentIcon.targetInventory = __instance.sourceMaster.inventory;
+		equipmentIcon.gameObject.SetActive(shouldDisplay);
+	}
+
+	/// <summary>
+	/// Determines if the equipment preview should be displayed or not
+	/// </summary>
+	private static bool ShouldDisplayUI(CharacterMaster master)
+	{
+		if (Configuration.Instance == null)
+			return false;
+
+		var type = Configuration.Instance.AllowedTargets.Value;
+
+		if (type == Configuration.TargetType.None)
+			return false;
+
+		var bodyIndex = master.GetBody().bodyIndex;
+
+		if (SurvivorCatalog.GetSurvivorIndexFromBodyIndex(bodyIndex) != SurvivorIndex.None)
+			return type.HasFlag(Configuration.TargetType.Survivors);
+
+		if (DroneCatalog.GetDroneIndexFromBodyIndex(bodyIndex) != DroneIndex.None)
+			return type.HasFlag(Configuration.TargetType.Drones);
+
+		if (master.minionOwnership.ownerMaster != null)
+			return type.HasFlag(Configuration.TargetType.Allies);
+
+		var equipmentIndex = master.inventory.currentEquipmentState.equipmentIndex;
+		return equipmentIndex != EquipmentIndex.None;
 	}
 }
