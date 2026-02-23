@@ -1,6 +1,5 @@
 ﻿using BepInEx;
-using Log = WhatchaGotThere.Helpers.Log;
-using Patch = WhatchaGotThere.Helpers.Patch;
+using WhatchaGotThere.Helpers;
 
 namespace WhatchaGotThere;
 
@@ -9,6 +8,7 @@ internal class Plugin : BaseUnityPlugin
 {
 	private void Awake()
 	{
+		Configuration.Load(Config);
 		Patch.ApplyAll();
 		Log.Info($"{MyPluginInfo.PLUGIN_GUID} v{MyPluginInfo.PLUGIN_VERSION} has loaded!");
 	}
