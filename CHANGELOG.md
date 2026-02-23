@@ -1,6 +1,16 @@
 # Changelog
 
 <details>
+<summary>1.0.2</summary>
+
+## Additions
+- Added `AllowedTargets` config
+
+## Fixes
+- Hovering the equipment icon no longer blocks player inputs.
+</details>
+
+<details>
 <summary>1.0.1</summary>
 
 ## Fixes
