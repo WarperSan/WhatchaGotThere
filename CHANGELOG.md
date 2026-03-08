@@ -5,6 +5,10 @@
 
 ## Fixes
 - The UI now takes into account if the ally has an equipment or not.
+- The config `NONE` now actually removes any UI.
+
+## Changes
+- Improved stability of the UI by using a component instead of relying on other sources.
 </details>
 
 <details>
