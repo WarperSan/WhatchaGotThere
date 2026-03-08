@@ -26,7 +26,7 @@ internal static class AllyCardController_Patches
 		if (__result)
 			return;
 
-		if (!AllyCardData.CachedInstances.TryGetValue(__instance, out var data))
+		if (!AllyCardData.TryGet(__instance, out var data))
 			return;
 
 		var currentEquipmentIndex = __instance.sourceMaster.inventory.currentEquipmentIndex;
@@ -42,7 +42,7 @@ internal static class AllyCardController_Patches
 	private static void UpdateInfo_Postfix(AllyCardController __instance)
 	{
 		// Get data
-		if (!AllyCardData.CachedInstances.TryGetValue(__instance, out var data))
+		if (!AllyCardData.TryGet(__instance, out var data))
 			return;
 
 		// Get icon

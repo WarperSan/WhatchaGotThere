@@ -10,7 +10,7 @@ namespace WhatchaGotThere;
 [RequireComponent(typeof(AllyCardController))]
 internal class AllyCardData : MonoBehaviour
 {
-	public static readonly Dictionary<AllyCardController, AllyCardData> CachedInstances = new();
+	private static readonly Dictionary<AllyCardController, AllyCardData> CachedInstances = new();
 
 	public AllyCardController? Controller     { get; private set; }
 	public EquipmentIcon?      EquipmentIcon  { get; private set; }
@@ -23,6 +23,14 @@ internal class AllyCardData : MonoBehaviour
 		EquipmentIndex = EquipmentIndex.None;
 
 		CachedInstances.Add(Controller, this);
+	}
+
+	/// <summary>
+	/// Tries to get the <see cref="AllyCardData"/> associated with the given <see cref="AllyCardController"/>
+	/// </summary>
+	public static bool TryGet(AllyCardController instance, out AllyCardData data)
+	{
+		return CachedInstances.TryGetValue(instance, out data);
 	}
 
 	/// <summary>
