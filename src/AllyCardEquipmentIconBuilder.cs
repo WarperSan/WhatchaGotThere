@@ -1,0 +1,93 @@
+using RoR2.UI;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace WhatchaGotThere;
+
+public static class AllyCardEquipmentIconBuilder
+{
+	/// <summary>
+	/// Creates the <see cref="EquipmentIcon"/> in the given parent
+	/// </summary>
+	public static void CreateIcon(Transform transform)
+	{
+		var equipmentSlot = new GameObject(
+			nameof(WhatchaGotThere) + " EquipmentSlot",
+			typeof(RectTransform),
+			typeof(LayoutElement),
+			typeof(Image),
+			typeof(TooltipProvider)
+		);
+		equipmentSlot.transform.SetParent(transform, false);
+		equipmentSlot.AddComponent<MPEventSystemLocator>();
+		equipmentSlot.AddComponent<HGButton>();
+
+		var siblingIndex = transform.Find("Portrait")?.GetSiblingIndex() ?? -1;
+
+		if (siblingIndex != -1)
+			equipmentSlot.transform.SetSiblingIndex(siblingIndex + 1);
+
+		var equipmentSlotRect = equipmentSlot.GetComponent<RectTransform>();
+		equipmentSlotRect.sizeDelta = new Vector2(48f, 48f);
+
+		var equipmentSlotLayoutElement = equipmentSlot.GetComponent<LayoutElement>();
+		equipmentSlotLayoutElement.preferredWidth = equipmentSlotRect.rect.width;
+		equipmentSlotLayoutElement.preferredHeight = equipmentSlotRect.rect.height;
+
+		var equipmentSlotImage = equipmentSlot.GetComponent<Image>();
+		equipmentSlotImage.color = Color.clear;
+		equipmentSlotImage.raycastTarget = false;
+
+		var equipmentSlotButton = equipmentSlot.GetComponent<HGButton>();
+		equipmentSlotButton.image = equipmentSlotImage;
+		equipmentSlotButton.selectOnPointerEnter = false;
+
+		var equipmentSlotUIPassthrough = equipmentSlot.AddComponent<UIInputPassthrough>();
+		equipmentSlotUIPassthrough.OnlyAllowMovement = false;
+
+		var equipmentIcon = equipmentSlot.AddComponent<EquipmentIcon>();
+		equipmentIcon.tooltipProvider = equipmentSlot.GetComponent<TooltipProvider>();
+
+		var displayRoot = new GameObject("DisplayRoot", typeof(RectTransform));
+		displayRoot.transform.SetParent(equipmentSlot.transform, false);
+		equipmentIcon.displayRoot = displayRoot;
+
+		var displayRootRect = displayRoot.GetComponent<RectTransform>();
+		displayRootRect.anchorMin = Vector2.zero;
+		displayRootRect.anchorMax = Vector2.one;
+		displayRootRect.offsetMin = Vector2.zero;
+		displayRootRect.offsetMax = Vector2.zero;
+
+		var iconPanel = new GameObject(
+			"IconPanel",
+			typeof(RectTransform),
+			typeof(RawImage)
+		);
+		iconPanel.transform.SetParent(displayRoot.transform, false);
+		equipmentIcon.iconImage = iconPanel.GetComponent<RawImage>();
+
+		var iconPanelRect = iconPanel.GetComponent<RectTransform>();
+		iconPanelRect.anchorMin = Vector2.zero;
+		iconPanelRect.anchorMax = Vector2.one;
+		iconPanelRect.offsetMin = Vector2.zero;
+		iconPanelRect.offsetMax = Vector2.zero;
+
+		var cooldownText = new GameObject(
+			"Cooldown Text",
+			typeof(RectTransform),
+			typeof(HGTextMeshProUGUI)
+		);
+		cooldownText.transform.SetParent(displayRoot.transform, false);
+
+		var cooldownTextRect = cooldownText.GetComponent<RectTransform>();
+		cooldownTextRect.anchorMin = Vector2.zero;
+		cooldownTextRect.anchorMax = Vector2.one;
+		cooldownTextRect.offsetMin = Vector2.zero;
+		cooldownTextRect.offsetMax = Vector2.zero;
+
+		var cooldownTextGUI = cooldownText.GetComponent<HGTextMeshProUGUI>();
+		cooldownTextGUI.alignment = TextAlignmentOptions.Center;
+		equipmentIcon.cooldownText = cooldownTextGUI;
+	}
+}
