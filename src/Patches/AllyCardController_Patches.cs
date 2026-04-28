@@ -79,6 +79,9 @@ internal static class AllyCardController_Patches
 		if (type == Configuration.TargetType.None)
 			return false;
 
+		if (!master.hasBody)
+			return false;
+
 		var bodyIndex = master.GetBody().bodyIndex;
 
 		if (SurvivorCatalog.GetSurvivorIndexFromBodyIndex(bodyIndex) != SurvivorIndex.None)
