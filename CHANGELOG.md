@@ -1,6 +1,13 @@
 # Changelog
 
 <details>
+<summary>1.0.4</summary>
+
+## Fixes
+- A character without a body will not display their equipment.
+</details>
+
+<details>
 <summary>1.0.3</summary>
 
 ## Fixes
