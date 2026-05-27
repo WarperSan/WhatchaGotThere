@@ -12,10 +12,4 @@ internal class Plugin : BaseUnityPlugin
 		Patch.ApplyAll();
 		Log.Info($"{MyPluginInfo.PLUGIN_GUID} v{MyPluginInfo.PLUGIN_VERSION} has loaded!");
 	}
-
-	private void OnDestroy()
-	{
-		Patch.RevertAll();
-		Log.Info($"{MyPluginInfo.PLUGIN_GUID} v{MyPluginInfo.PLUGIN_VERSION} has unloaded!");
-	}
 }
