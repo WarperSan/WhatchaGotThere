@@ -1,4 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+    <Sdk Name="ThunderPipe.Sdk" Version="1.0.0"/>
+
     <!-- BepInEx Properties -->
     <PropertyGroup>
         <AssemblyName>WhatchaGotThere</AssemblyName>
