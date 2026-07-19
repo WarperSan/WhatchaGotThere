@@ -1,29 +1,34 @@
-name: 'Publish Package'
+name: Publish
+
+env:
+  PROJECT_FILE: './WhatchaGotThere.csproj'
 
 on:
   push:
-    tags:
-      - '*'
+    tags: [ "*" ]
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-dotnet@v6
-        with:
-          dotnet-version: 8
+      -   name: Checkout
+          uses: actions/checkout@v7
+          with:
+            fetch-depth: 0
+            filter: tree:0
 
-      - name: Restore Dependencies
-        shell: bash
-        run: dotnet restore
+      -   name: Setup .NET
+          uses: actions/setup-dotnet@v6
+          with:
+            dotnet-version: 8
 
-      - name: Restore Tools
-        shell: bash
-        run: dotnet tool restore
+      -   name: Restore
+          run: dotnet restore "$PROJECT_FILE"
+          env:
+            PROJECT_FILE: ${{ env.PROJECT_FILE }}
 
-      - name: Publish to Thunderstore
-        run: dotnet pack "$PROJECT_FILE" -c Release -p:PublishTS=true --no-restore
-        env:
-          THUNDERSTORE_TOKEN: ${{ secrets.TCLI_AUTH_TOKEN }}
-          PROJECT_FILE: ${{ env.PROJECT_FILE }}
+      -   name: Publish to Thunderstore
+          run: dotnet pack "$PROJECT_FILE" -c Release -p:PublishTS=true --no-restore
+          env:
+            THUNDERSTORE_TOKEN: ${{ secrets.TCLI_AUTH_TOKEN }}
+            PROJECT_FILE: ${{ env.PROJECT_FILE }}
