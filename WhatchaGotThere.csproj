@@ -29,4 +29,6 @@
 
         <PackageReference Include="RiskOfRain2.GameLibs" Version="1.4.1-r.0"/>
     </ItemGroup>
+    
+    <Import Project="Thunderstore.props"/>
 </Project>
