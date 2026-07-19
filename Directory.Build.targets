@@ -30,4 +30,23 @@ namespace $(RootNamespace)
 
         <WriteLinesToFile Lines="$(GeneratedText)" File="$(GeneratedFilePath)" WriteOnlyWhenDifferent="true" Overwrite="true"/>
     </Target>
+
+    <Target Name="SetThunderstoreVersion" AfterTargets="MinVer">
+        <!-- Use MinVer for the version -->
+        <PropertyGroup>
+            <ThunderstoreVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)</ThunderstoreVersion>
+        </PropertyGroup>
+    </Target>
+
+    <PropertyGroup>
+        <!-- Pack on 'Release' build -->
+        <RunThunderPipePackAfterBuild
+                Condition="'$(RunThunderPipePackAfterBuild)' != 'false' And '$(Configuration)' == 'Release'"
+        >true</RunThunderPipePackAfterBuild>
+        
+        <!-- Publish on 'PublishTS' build -->
+        <RunThunderPipePublishAfterBuild
+                Condition="'$(RunThunderPipePublishAfterBuild)' != 'false' And '$(RunThunderPipePackAfterBuild)' == 'true' And '$(PublishTS)' == 'true'"
+        >true</RunThunderPipePublishAfterBuild>
+    </PropertyGroup>
 </Project>
