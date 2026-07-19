@@ -22,51 +22,8 @@ jobs:
         shell: bash
         run: dotnet tool restore
 
-      - name: Get Properties
-        id: get-properties
-        shell: bash
-        run: |
-          get-dotnet-property() {
-            local CSPROJ="./WhatchaGotThere.csproj"
-          
-            for propertyName in "$@"
-            do
-              local VALUE=$(dotnet msbuild "$CSPROJ" --getProperty:"$propertyName")
-          
-              if [ -n "$VALUE" ]; then
-                  echo "$VALUE"
-                  return 0
-              fi
-            done
-          
-            echo ""
-          }
-          
-          echo "NAME=$(get-dotnet-property 'Product')" >> $GITHUB_OUTPUT
-          echo "TEAM=$(get-dotnet-property 'Authors')" >> $GITHUB_OUTPUT
-          echo "DESCRIPTION=$(get-dotnet-property 'Description')" >> $GITHUB_OUTPUT
-          echo "WEBSITE=$(get-dotnet-property 'PackageProjectUrl' 'RepositoryUrl')" >> $GITHUB_OUTPUT
-
-      - uses: WarperSan/upload-thunderstore-package@v1.0.1
-        with:
-          community: 'riskofrain2'
-          team: ${{ steps.get-properties.outputs.TEAM }}
-          categories: |
-            mods
-            client-side
-            tweaks
-            items
-          name: ${{ steps.get-properties.outputs.NAME }}
-          description: ${{ steps.get-properties.outputs.DESCRIPTION }}
-          version: ${{ github.ref_name }}
-          dependencies: |
-            bbepis-BepInExPack-5.4.2121
-          website: ${{ steps.get-properties.outputs.WEBSITE }}
-          files: |
-            ./bin/Release/netstandard2.1/WhatchaGotThere.dll
-          token: ${{ secrets.TCLI_AUTH_TOKEN }}
-          package-files: |
-            ./icon.png
-            ./README.md
-            ./LICENSE
-            ./CHANGELOG.md
+      - name: Publish to Thunderstore
+        run: dotnet pack "$PROJECT_FILE" -c Release -p:PublishTS=true --no-restore
+        env:
+          THUNDERSTORE_TOKEN: ${{ secrets.TCLI_AUTH_TOKEN }}
+          PROJECT_FILE: ${{ env.PROJECT_FILE }}
