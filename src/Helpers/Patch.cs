@@ -12,7 +12,7 @@ internal static class Patch
 	/// </summary>
 	public static void ApplyAll()
 	{
-		var harmony = new Harmony(MyPluginInfo.PLUGIN_GUID);
+		var harmony = new Harmony(Plugin.Id);
 
 		harmony.PatchAll(typeof(Patches.AllyCardController_Patches));
 		harmony.PatchAll(typeof(Patches.AllyCardManager_Patches));

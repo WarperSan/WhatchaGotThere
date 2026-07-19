@@ -1,4 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+    <Sdk Name="ThunderPipe.Sdk" Version="1.0.0"/>
+
     <!-- BepInEx Properties -->
     <PropertyGroup>
         <AssemblyName>WhatchaGotThere</AssemblyName>
@@ -17,6 +19,10 @@
     <!-- Packages -->
     <ItemGroup>
         <PackageReference Include="BepInEx.Core" Version="5.4.21" PrivateAssets="all"/>
+        <PackageReference Include="Hamunii.BepInEx.AutoPlugin" Version="2.1.0">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="UnityEngine.Modules" Version="2021.3.33" IncludeAssets="compile" PrivateAssets="all"/>
         <PackageReference Include="MinVer" Version="7.0.0" PrivateAssets="all"/>
 
@@ -27,4 +33,6 @@
 
         <PackageReference Include="RiskOfRain2.GameLibs" Version="1.4.1-r.0"/>
     </ItemGroup>
+    
+    <Import Project="Thunderstore.props"/>
 </Project>

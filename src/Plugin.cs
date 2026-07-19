@@ -3,13 +3,14 @@ using WhatchaGotThere.Helpers;
 
 namespace WhatchaGotThere;
 
-[BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
-internal class Plugin : BaseUnityPlugin
+// ReSharper disable once StringLiteralTypo
+[BepInAutoPlugin("dev.warpersan.watchagotthere")]
+internal partial class Plugin : BaseUnityPlugin
 {
 	private void Awake()
 	{
 		Configuration.Load(Config);
 		Patch.ApplyAll();
-		Log.Info($"{MyPluginInfo.PLUGIN_GUID} v{MyPluginInfo.PLUGIN_VERSION} has loaded!");
+		Log.Info($"{Name} v{Version} has loaded!");
 	}
 }

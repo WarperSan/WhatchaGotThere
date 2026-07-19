@@ -11,7 +11,7 @@ internal static class Log
 
     private static void LogSelf(string message, LogLevel level)
     {
-        _logger ??= Logger.CreateLogSource(MyPluginInfo.PLUGIN_NAME);
+        _logger ??= Logger.CreateLogSource(Plugin.Id);
         _logger?.Log(level, message);
     }
 

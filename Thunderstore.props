@@ -1,0 +1,28 @@
+<Project>
+    <!-- Package metadata -->
+    <PropertyGroup>
+        <ThunderstoreTeam>$(Authors)</ThunderstoreTeam>
+        <ThunderstoreName>$(AssemblyTitle.Replace('.', '_'))</ThunderstoreName>
+        <ThunderstoreDescription>$(Description)</ThunderstoreDescription>
+        <ThunderstoreWebsite>$(RepositoryUrl)</ThunderstoreWebsite>
+
+        <ThunderstoreCommunities>riskofrain2</ThunderstoreCommunities>
+        <ThunderstoreCategories>mods;client-side;tweaks;items</ThunderstoreCategories>
+
+        <ThunderstoreToken>$(THUNDERSTORE_TOKEN)</ThunderstoreToken>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- Mod Files -->
+        <ThunderstoreFile Include="$(TargetPath)" Destination="plugins/" />
+
+        <!-- Package Files -->
+        <ThunderstorePackageFile Include="README.md" />
+        <ThunderstorePackageFile Include="CHANGELOG.md" />
+        <ThunderstorePackageFile Include="LICENSE" />
+        <ThunderstorePackageFile Include="icon.png" />
+
+        <!-- Thunderstore Dependencies -->
+        <ThunderstoreDependency Include="bbepis-BepInExPack" Version="5.4.2121" />
+    </ItemGroup>
+</Project>

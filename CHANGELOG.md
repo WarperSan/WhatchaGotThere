@@ -1,6 +1,15 @@
 # Changelog
 
 <details>
+<summary>1.0.5</summary>
+
+## Changes
+- Migrated from `WarperSan/upload-thunderstore-package` to `ThunderPipe.Sdk`
+- Replaced manual generation of `PluginInfo` with `AutoPlugin`
+
+</details>
+
+<details>
 <summary>1.0.4</summary>
 
 ## Fixes
