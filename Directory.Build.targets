@@ -1,4 +1,19 @@
 <Project>
+    <Target Name="CopyOutput" AfterTargets="PostBuildEvent" Condition="'$(PluginFolder)' != ''">
+        <ItemGroup>
+            <OutputFiles Include="@(ThunderstoreFile)">
+                <RelativeDestination>$([System.String]::Copy('%(Destination)').Replace('plugins/', ''))</RelativeDestination>
+            </OutputFiles>
+        </ItemGroup>
+
+        <RemoveDir Directories="$(PluginFolder)" />
+
+        <Copy
+                SourceFiles="@(OutputFiles)"
+                DestinationFiles="@(OutputFiles->'$(PluginFolder)%(RelativeDestination)%(RecursiveDir)%(Filename)%(Extension)')"
+        />
+    </Target>
+
     <Target Name="SetThunderstoreVersion" AfterTargets="MinVer">
         <!-- Use MinVer for the version -->
         <PropertyGroup>
