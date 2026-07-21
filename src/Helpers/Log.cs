@@ -3,47 +3,29 @@ using BepInEx.Logging;
 namespace WhatchaGotThere.Helpers;
 
 /// <summary>
-///     Class helping for logging stuff
+/// Class offering logging features
 /// </summary>
 internal static class Log
 {
-    private static ManualLogSource? _logger;
-
-    private static void LogSelf(string message, LogLevel level)
-    {
-        _logger ??= Logger.CreateLogSource(Plugin.Id);
-        _logger?.Log(level, message);
-    }
+	private static readonly Lazy<ManualLogSource> Logger = new(() => new ManualLogSource(Plugin.Id));
 
 	/// <summary>
-	///     Logs information for developers that helps to debug the mod
+	/// Logs information for developers that helps to debug the mod
 	/// </summary>
-	public static void Debug(string message)
-	{
-        LogSelf(message, LogLevel.Debug);
-	}
+	public static void Debug(string? message) => Logger.Value.LogDebug(message);
 
 	/// <summary>
-	///     Logs information for players to know important steps of the mod
+	/// Logs information for players to know important steps of the mod
 	/// </summary>
-	public static void Info(string message)
-	{
-        LogSelf(message, LogLevel.Message);
-	}
+	public static void Info(string? message) => Logger.Value.LogInfo(message);
 
 	/// <summary>
-	///     Logs information for players to warn them about an unwanted state
+	/// Logs information for players to warn them about an unwanted state
 	/// </summary>
-	public static void Warning(string message)
-	{
-        LogSelf(message, LogLevel.Warning);
-	}
+	public static void Warning(string? message) => Logger.Value.LogWarning(message);
 
 	/// <summary>
-	///     Logs information for players to notify them of an error
+	/// Logs information for players to notify them of an error
 	/// </summary>
-	public static void Error(string message)
-	{
-        LogSelf(message, LogLevel.Error);
-	}
+	public static void Error(string? message) => Logger.Value.LogError(message);
 }
