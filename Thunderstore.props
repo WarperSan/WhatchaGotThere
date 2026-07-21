@@ -2,7 +2,7 @@
     <!-- Package metadata -->
     <PropertyGroup>
         <ThunderstoreTeam>$(Authors)</ThunderstoreTeam>
-        <ThunderstoreName>$(AssemblyTitle.Replace('.', '_'))</ThunderstoreName>
+        <ThunderstoreName>$(Product.Replace('.', '_'))</ThunderstoreName>
         <ThunderstoreDescription>$(Description)</ThunderstoreDescription>
         <ThunderstoreWebsite>$(RepositoryUrl)</ThunderstoreWebsite>
 
