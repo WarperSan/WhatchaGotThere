@@ -13,7 +13,7 @@ internal class Configuration
 		Survivors = 1,
 		Drones = 1 << 1,
 		Allies = 1 << 2,
-		All = Survivors | Drones | Allies
+		All = Survivors | Drones | Allies,
 	}
 
 	public readonly ConfigEntry<TargetType> AllowedTargets;

@@ -34,5 +34,12 @@
         <PackageReference Include="RiskOfRain2.GameLibs" Version="1.4.1-r.0"/>
     </ItemGroup>
     
+    <!-- Dependencies -->
+    <ItemGroup>
+        <!-- Hard -->
+        <!-- Soft -->
+        <PackageReference Include="Rune580.Mods.RiskOfRain2.RiskOfOptions" Version="2.8.5" />
+    </ItemGroup>
+    
     <Import Project="Thunderstore.props"/>
 </Project>
