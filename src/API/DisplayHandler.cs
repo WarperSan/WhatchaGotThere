@@ -9,7 +9,7 @@ namespace WhatchaGotThere.API;
 /// </summary>
 public static class DisplayHandler
 {
-	private static readonly List<Predicate<CharacterMaster>> DisplayPredicates = [];
+	private static readonly List<Func<CharacterMaster, bool?>> DisplayConditions = [];
 
 	/// <summary>
 	/// Defines if the equipment icon of the given <see cref="CharacterMaster"/> should be displayed
@@ -47,20 +47,26 @@ public static class DisplayHandler
 			}
 		}
 
-		// If no predicate, enable
-		if (DisplayPredicates.Count == 0)
-			return true;
+		// If any condition enable, enable
+		foreach (var condition in DisplayConditions)
+		{
+			var result = condition.Invoke(master);
+			
+			if (!result.HasValue)
+				continue;
+			
+			return result.Value;
+		}
 
-		// If any predicate enable, enable
-		return DisplayPredicates.Any(predicate => predicate.Invoke(master));
+		return true;
 	}
 
 	/// <summary>
-	/// Adds the given <see cref="Predicate{T}"/> to the list of conditions
+	/// Adds the given condition to the list of conditions
 	/// </summary>
 	[PublicAPI]
-	public static void AddCondition(Predicate<CharacterMaster> predicate)
+	public static void AddCondition(Func<CharacterMaster, bool?> condition)
 	{
-		DisplayPredicates.Add(predicate);
+		DisplayConditions.Add(condition);
 	}
 }
