@@ -16,10 +16,17 @@ internal class Configuration
 		All = Survivors | Drones | Allies
 	}
 
+	public readonly ConfigEntry<bool> UseAllowedTarget;
 	public readonly ConfigEntry<TargetType> AllowedTargets;
 
 	private Configuration(ConfigFile cfg)
 	{
+		UseAllowedTarget = cfg.Bind(
+			new ConfigDefinition(SECTION, "UseAllowedTarget"),
+			true,
+			new ConfigDescription("Determines if the allowed targets should be used to determine if the equipment is shown.")
+		);
+
 		AllowedTargets = cfg.Bind(
 			new ConfigDefinition(SECTION, "AllowedTargets"),
 			TargetType.All,

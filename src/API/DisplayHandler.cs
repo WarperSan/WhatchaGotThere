@@ -12,7 +12,7 @@ public static class DisplayHandler
 	private static readonly List<Func<CharacterMaster, bool?>> DisplayConditions =
 	[
 		DisableIfNoEquipment,
-		DisableIfTargetNotAllowed
+		DisableIfTargetNotAllowed,
 	];
 
 	/// <summary>
@@ -30,7 +30,7 @@ public static class DisplayHandler
 			return result.Value;
 		}
 
-		return true;
+		return false;
 	}
 
 	/// <summary>
@@ -57,10 +57,15 @@ public static class DisplayHandler
 
 	private static bool? DisableIfTargetNotAllowed(CharacterMaster master)
 	{
-		if (Configuration.Instance == null)
+		var config = Configuration.Instance;
+
+		if (config == null)
 			return null;
 
-		var type = Configuration.Instance.AllowedTargets.Value;
+		if (!config.UseAllowedTarget.Value)
+			return null;
+
+		var type = config.AllowedTargets.Value;
 
 		// If no target allowed, disable
 		if (type == Configuration.TargetType.None)
