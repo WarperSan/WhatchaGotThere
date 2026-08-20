@@ -21,36 +21,36 @@ public static class DisplayHandler
 			return false;
 
 		// If no configuration, disable
-		if (Configuration.Instance == null)
-			return true;
+		if (Configuration.Instance != null)
+		{
+			var type = Configuration.Instance.AllowedTargets.Value;
 
-		var type = Configuration.Instance.AllowedTargets.Value;
+			// If no target allowed, disable
+			if (type == Configuration.TargetType.None)
+				return false;
 
-		// If no target allowed, disable
-		if (type == Configuration.TargetType.None)
-			return false;
+			if (master.hasBody)
+			{
+				var bodyIndex = master.GetBody().bodyIndex;
 
-		if (!master.hasBody)
-			return false;
+				// If master is a survivor, use survivors target
+				if (SurvivorCatalog.GetSurvivorIndexFromBodyIndex(bodyIndex) != SurvivorIndex.None)
+					return type.HasFlag(Configuration.TargetType.Survivors);
 
-		var bodyIndex = master.GetBody().bodyIndex;
+				// If master is a drone, use drones target
+				if (DroneCatalog.GetDroneIndexFromBodyIndex(bodyIndex) != DroneIndex.None)
+					return type.HasFlag(Configuration.TargetType.Drones);
 
-		// If master is a survivor, use survivors target
-		if (SurvivorCatalog.GetSurvivorIndexFromBodyIndex(bodyIndex) != SurvivorIndex.None)
-			return type.HasFlag(Configuration.TargetType.Survivors);
-
-		// If master is a drone, use drones target
-		if (DroneCatalog.GetDroneIndexFromBodyIndex(bodyIndex) != DroneIndex.None)
-			return type.HasFlag(Configuration.TargetType.Drones);
-
-		// If master is an ally, use allies target
-		if (master.minionOwnership.ownerMaster != null)
-			return type.HasFlag(Configuration.TargetType.Allies);
+				// If master is an ally, use allies target
+				if (master.minionOwnership.ownerMaster != null)
+					return type.HasFlag(Configuration.TargetType.Allies);
+			}
+		}
 
 		// If any predicate enable, enable
 		return DisplayPredicates.Any(predicate => predicate.Invoke(master));
 	}
-	
+
 	/// <summary>
 	/// Adds the given <see cref="Predicate{T}"/> to the list of conditions
 	/// </summary>
