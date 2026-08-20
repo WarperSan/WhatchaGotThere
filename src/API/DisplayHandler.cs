@@ -47,6 +47,10 @@ public static class DisplayHandler
 			}
 		}
 
+		// If no predicate, enable
+		if (DisplayPredicates.Count == 0)
+			return true;
+
 		// If any predicate enable, enable
 		return DisplayPredicates.Any(predicate => predicate.Invoke(master));
 	}
