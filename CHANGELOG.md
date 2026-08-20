@@ -1,19 +1,14 @@
 # Changelog
 
 <details>
-<summary>1.0.6</summary>
-
-## Additions
-- Added `API.DisplayHandler` to allow other mods to define if their character should display the icon or not
-
-</details>
-
-<details>
 <summary>1.0.5</summary>
 
 ## Changes
 - Migrated from `WarperSan/upload-thunderstore-package` to `ThunderPipe.Sdk`
 - Replaced manual generation of `PluginInfo` with `AutoPlugin`
+
+## Additions
+- Added `API.DisplayHandler` to allow other mods to define if their character should display the icon or not
 
 </details>
 
