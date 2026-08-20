@@ -4,7 +4,7 @@ using WhatchaGotThere.Helpers;
 namespace WhatchaGotThere;
 
 // ReSharper disable once StringLiteralTypo
-[BepInAutoPlugin("dev.warpersan.watchagotthere")]
+[BepInAutoPlugin("dev.warpersan.whatchagotthere")]
 internal partial class Plugin : BaseUnityPlugin
 {
 	private void Awake()
