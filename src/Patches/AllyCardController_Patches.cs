@@ -1,6 +1,7 @@
 using HarmonyLib;
 using RoR2;
 using RoR2.UI;
+using WhatchaGotThere.API;
 using WhatchaGotThere.Helpers;
 
 // ReSharper disable InconsistentNaming
@@ -57,42 +58,9 @@ internal static class AllyCardController_Patches
 		if (!__instance.sourceMaster)
 			return;
 
-		var shouldDisplay = ShouldDisplayUI(__instance.sourceMaster);
+		var shouldDisplay = DisplayHandler.IsDisplayed(__instance.sourceMaster);
 
 		equipmentIcon.targetInventory = __instance.sourceMaster.inventory;
 		equipmentIcon.gameObject.SetActive(shouldDisplay);
-	}
-
-	/// <summary>
-	/// Determines if the equipment preview should be displayed or not
-	/// </summary>
-	private static bool ShouldDisplayUI(CharacterMaster master)
-	{
-		if (master.inventory.currentEquipmentState.equipmentIndex == EquipmentIndex.None)
-			return false;
-
-		if (Configuration.Instance == null)
-			return true;
-
-		var type = Configuration.Instance.AllowedTargets.Value;
-
-		if (type == Configuration.TargetType.None)
-			return false;
-
-		if (!master.hasBody)
-			return false;
-
-		var bodyIndex = master.GetBody().bodyIndex;
-
-		if (SurvivorCatalog.GetSurvivorIndexFromBodyIndex(bodyIndex) != SurvivorIndex.None)
-			return type.HasFlag(Configuration.TargetType.Survivors);
-
-		if (DroneCatalog.GetDroneIndexFromBodyIndex(bodyIndex) != DroneIndex.None)
-			return type.HasFlag(Configuration.TargetType.Drones);
-
-		if (master.minionOwnership.ownerMaster != null)
-			return type.HasFlag(Configuration.TargetType.Allies);
-
-		return true;
 	}
 }
