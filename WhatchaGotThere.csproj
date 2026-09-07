@@ -24,7 +24,7 @@
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="UnityEngine.Modules" Version="2021.3.33" IncludeAssets="compile" PrivateAssets="all"/>
-        <PackageReference Include="MinVer" Version="7.0.0" PrivateAssets="all"/>
+        <PackageReference Include="MinVer" Version="8.0.0" PrivateAssets="all"/>
 
         <PackageReference Include="BepInEx.Analyzers" Version="1.0.*">
             <PrivateAssets>all</PrivateAssets>
