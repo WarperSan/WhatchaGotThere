@@ -1,8 +1,6 @@
 using HarmonyLib;
-using RoR2;
 using RoR2.UI;
 using WhatchaGotThere.API;
-using WhatchaGotThere.Helpers;
 
 // ReSharper disable InconsistentNaming
 
@@ -60,7 +58,7 @@ internal static class AllyCardController_Patches
 
 		var shouldDisplay = DisplayHandler.IsDisplayed(__instance.sourceMaster);
 
-		equipmentIcon.targetInventory = __instance.sourceMaster.inventory;
+		equipmentIcon.SetTargetInventory(__instance.sourceMaster.inventory);
 		equipmentIcon.gameObject.SetActive(shouldDisplay);
 	}
 }

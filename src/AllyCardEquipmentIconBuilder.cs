@@ -62,7 +62,8 @@ public static class AllyCardEquipmentIconBuilder
 		var iconPanel = new GameObject(
 			"IconPanel",
 			typeof(RectTransform),
-			typeof(RawImage)
+			typeof(RawImage),
+			typeof(AsyncRawImage)
 		);
 		iconPanel.transform.SetParent(displayRoot.transform, false);
 		equipmentIcon.iconImage = iconPanel.GetComponent<RawImage>();
