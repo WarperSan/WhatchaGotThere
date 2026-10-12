@@ -1,6 +1,17 @@
 # Changelog
 
 <details>
+<summary>1.0.6</summary>
+
+## Fixes
+- Modified the mod to work with Hallowed Concept
+
+## Changes
+- Reworked te config `AllowedTargets` into `AllowSurvivorsTarget`, `AllowDronesTarget` and `AllowAlliesTarget`
+
+</details>
+
+<details>
 <summary>1.0.5</summary>
 
 ## Changes
