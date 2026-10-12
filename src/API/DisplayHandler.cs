@@ -62,13 +62,12 @@ public static class DisplayHandler
 		if (config == null)
 			return null;
 
-		if (!config.UseAllowedTarget.Value)
-			return null;
-
-		var type = config.AllowedTargets.Value;
+		var allowSurvivors = config.AllowSurvivorsTarget.Value;
+		var allowDrones = config.AllowDronesTarget.Value;
+		var allowAllies = config.AllowAlliesTarget.Value;
 
 		// If no target allowed, disable
-		if (type == Configuration.TargetType.None)
+		if (!allowSurvivors && !allowDrones && !allowAllies)
 			return false;
 
 		if (!master.hasBody)
@@ -78,15 +77,15 @@ public static class DisplayHandler
 
 		// If master is a survivor, use survivors target
 		if (SurvivorCatalog.GetSurvivorIndexFromBodyIndex(bodyIndex) != SurvivorIndex.None)
-			return type.HasFlag(Configuration.TargetType.Survivors);
+			return allowSurvivors;
 
 		// If master is a drone, use drones target
 		if (DroneCatalog.GetDroneIndexFromBodyIndex(bodyIndex) != DroneIndex.None)
-			return type.HasFlag(Configuration.TargetType.Drones);
+			return allowDrones;
 
 		// If master is an ally, use allies target
 		if (master.minionOwnership.ownerMaster != null)
-			return type.HasFlag(Configuration.TargetType.Allies);
+			return allowAllies;
 
 		return null;
 	}

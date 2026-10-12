@@ -6,31 +6,28 @@ internal class Configuration
 {
 	private const string SECTION = "Mod";
 
-	[Flags]
-	public enum TargetType : byte
-	{
-		None = 0,
-		Survivors = 1,
-		Drones = 1 << 1,
-		Allies = 1 << 2,
-		All = Survivors | Drones | Allies
-	}
-
-	public readonly ConfigEntry<bool> UseAllowedTarget;
-	public readonly ConfigEntry<TargetType> AllowedTargets;
+	public readonly ConfigEntry<bool> AllowSurvivorsTarget;
+	public readonly ConfigEntry<bool> AllowDronesTarget;
+	public readonly ConfigEntry<bool> AllowAlliesTarget;
 
 	private Configuration(ConfigFile cfg)
 	{
-		UseAllowedTarget = cfg.Bind(
-			new ConfigDefinition(SECTION, "UseAllowedTarget"),
+		AllowSurvivorsTarget = cfg.Bind(
+			new ConfigDefinition(SECTION, "AllowSurvivorsTarget"),
 			true,
-			new ConfigDescription("Determines if the allowed targets should be used to determine if the equipment is shown.")
+			new ConfigDescription("Determines if survivors can display their equipment.")
 		);
 
-		AllowedTargets = cfg.Bind(
-			new ConfigDefinition(SECTION, "AllowedTargets"),
-			TargetType.All,
-			new ConfigDescription("Determines who can display their equipment.")
+		AllowDronesTarget = cfg.Bind(
+			new ConfigDefinition(SECTION, "AllowDronesTarget"),
+			true,
+			new ConfigDescription("Determines if drones can display their equipment.")
+		);
+
+		AllowAlliesTarget = cfg.Bind(
+			new ConfigDefinition(SECTION, "AllowAlliesTarget"),
+			true,
+			new ConfigDescription("Determines if allies can display their equipment.")
 		);
 	}
 
